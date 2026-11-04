@@ -4,7 +4,9 @@ Cards come from the class recordings in Motion Design: the diorama class
 (diorama_export (1): built-in 3D geometry, cameras, lights, Substance materials,
 Media Encoder and compression, Photoshop batch actions) and the time travel class
 (time travel: 2.5D, 3D layers, lights and material options, per-character 3D,
-keying, Auto-Orient, the photo tunnel, depth of field and rack focus).
+keying, Auto-Orient, the photo tunnel, depth of field and rack focus) and the audio react class
+(audio_react_export: Audio Spectrum and Audio Waveform, panning, frequencies and bandwidth,
+Convert Audio to Keyframes, and linking properties to the sound with expressions).
 Starred cards are things the teacher flagged in class as quiz material or kept repeating.
 
 Space or click flips a card. Then Y or the Right arrow if you knew it, N or the Left arrow if
@@ -31,6 +33,7 @@ CAMERAS = "Cameras"
 LIGHTS = "Lights & materials"
 TRICKS = "Text, keying & tricks"
 OUTPUT = "Output & compression"
+AUDIO = "Audio react"
 
 CARDS = [
     # 3D space & layers
@@ -222,10 +225,54 @@ CARDS = [
      "Pick the action, source folder and destination folder.", False),
     (OUTPUT, "Batch keeps saving in the wrong place. Which option fixes it?", "Override Action \"Save As\" Commands",
      "Record a Save As inside the action.", False),
+
+    # Audio react
+    (AUDIO, "Hot key to show a layer's audio waveform in the timeline", "LL  (press L twice)",
+     "L alone shows Audio Levels.", False),
+    (AUDIO, "How do you preview just the audio?", "Press . (period) on the number pad", "", False),
+    (AUDIO, "Which two effects draw audio as a picture?", "Audio Spectrum and Audio Waveform",
+     "Effect > Generate. Put them on a solid and pick the audio layer in the effect.", False),
+    (AUDIO, "What is the Audio Waveform effect widely used for?",
+     "Heartbeat monitors, sci-fi interfaces, and TV phone calls (like Dateline)", "", False),
+    (AUDIO, "Name the three Display Options in Audio Spectrum", "Digital, Analog Lines, Analog Dots", "", False),
+    (AUDIO, "Name some Audio Spectrum settings you can change",
+     "Start and end frequency, frequency bands, maximum height, thickness, softness, inside and outside color",
+     "Side A, Side B or both, and a polar path for a round spectrum.", False),
+    (AUDIO, "How do you make Audio Spectrum follow a shape?", "Draw a mask on the layer and choose it as the effect's Path", "", False),
+    (AUDIO, "How do you move a sound from one speaker to the other?",
+     "In Audio Levels, lower one side (left or right) and keyframe it",
+     "If a bus drives from left to right on screen, the sound should travel with it.", False),
+    (AUDIO, "Bass, mid-range, treble: which is low and which is high?", "Bass is the low frequencies, treble is the high, mid-range is in between",
+     "\"This is the key to making a good homework.\"", True),
+    (AUDIO, "What does the K in 10k mean?", "Kilohertz: 1,000 hertz (10k = 10,000 Hz)", "", False),
+    (AUDIO, "About how low a frequency can you feel in a club?", "Around 40 Hz", "25 to 30 Hz is lower than most systems give you.", False),
+    (AUDIO, "Why do cheap earbuds sound small?", "They can't reproduce the lowest frequencies, so the bass is only implied", "", False),
+    (AUDIO, "Tape hiss sits at about what frequency, and how do you fix it?", "About 10k; pull that frequency down", "", False),
+    (AUDIO, "What is bandwidth?", "The range of frequencies a band covers",
+     "Open it to take in many frequencies, or narrow it (same start and end) to isolate one.", False),
+    (AUDIO, "What is a graphic EQ?", "A row of sliders, one per frequency band, for raising or lowering each band",
+     "More bands means finer control; mastering engineers work this way.", False),
+    (AUDIO, "How did old karaoke machines take the voice out?", "They pulled down the frequencies the voice sits on", "", False),
+    (AUDIO, "Why can't you link a layer's scale straight to the audio waveform?",
+     "The waveform has no numbers to link to; you have to convert the audio to keyframes first", "", True),
+    (AUDIO, "How do you turn audio into numbers you can use?", "Animation > Keyframe Assistant > Convert Audio to Keyframes",
+     "It makes an Audio Amplitude layer with Both Channels, Left and Right sliders.", True),
+    (AUDIO, "U vs UU?", "U: properties with keyframes.  UU: properties with changed values", "", False),
+    (AUDIO, "How do you link a property to the audio?",
+     "Option-click (Alt-click) its stopwatch, then drag the pick whip to the Both Channels slider", "", True),
+    (AUDIO, "The linked scale only reaches 12%. How do you make it bigger?", "Multiply in the expression: add  * 10  (or * 5)",
+     "* is the star key, above 9 on the number pad.", False),
+    (AUDIO, "How do you make rotation start at 72 degrees and add the audio on top?", "Add  + 72  to the expression", "", False),
+    (AUDIO, "How do you keep a linked opacity from ever reaching 0?", "Add a number to it, e.g.  + 10", "", False),
+    (AUDIO, "Which properties can you link to the audio?", "Any of them: scale, rotation, opacity, and effect settings like blur or posterize", "", False),
+    (AUDIO, "Which effect made the photo \"talk\" to the happy-birthday sound?", "CC Split (Distort)", "", False),
+    (AUDIO, "How do you turn an expression off without deleting it?", "Click its Enable Expression switch (=)", "", False),
+    (AUDIO, "Where can you find ready-made expression code, like wiggle variations?", "The Creative COW forums (Expressions)", "", False),
+    (AUDIO, "Where did the class get free music and sound effects?", "Pixabay", "", False),
 ]
 
 DECKS = [("1", SPACE, SPACE), ("2", CAMERAS, CAMERAS), ("3", LIGHTS, LIGHTS), ("4", TRICKS, TRICKS),
-         ("5", OUTPUT, OUTPUT), ("6", "Everything", None), ("7", "Flagged in class", "missed")]
+         ("5", OUTPUT, OUTPUT), ("6", AUDIO, AUDIO), ("7", "Everything", None), ("8", "Flagged in class", "missed")]
 
 # --- Look ---
 
@@ -369,7 +416,7 @@ class Game:
     # --- Menu ---
 
     def deck_box(self, i):
-        return pygame.Rect(220, 170 + i * 80, 560, 66)
+        return pygame.Rect(220, 162 + i * 72, 560, 62)
 
     def on_menu(self, event):
         for i, (key, label, deck) in enumerate(DECKS):
@@ -401,16 +448,16 @@ class Game:
                 count = sum(1 for c in CARDS if c[0] == deck)
             box = self.deck_box(i)
             pygame.draw.rect(self.screen, (45, 50, 75), box, border_radius=14)
-            pygame.draw.rect(self.screen, ACCENT, (box.x, box.y, 66, 66), border_radius=14)
+            pygame.draw.rect(self.screen, ACCENT, (box.x, box.y, box.height, box.height), border_radius=14)
             number = self.big_fonts[2].render(key, True, WHITE)
-            self.screen.blit(number, number.get_rect(center=(box.x + 33, box.centery)))
+            self.screen.blit(number, number.get_rect(center=(box.x + box.height // 2, box.centery)))
             text = self.font.render(label, True, WHITE)
-            self.screen.blit(text, (box.x + 90, box.y + 10))
+            self.screen.blit(text, (box.x + 86, box.y + 7))
             cards = self.small.render(f"{count} cards", True, DIM)
-            self.screen.blit(cards, (box.x + 90, box.y + 40))
+            self.screen.blit(cards, (box.x + 86, box.y + 36))
         tip = self.small.render("Starred cards were flagged in class as quiz material." + ("" if WEB else "  Esc quits."),
                                 True, DIM)
-        self.screen.blit(tip, tip.get_rect(center=(WIDTH // 2, HEIGHT - 40)))
+        self.screen.blit(tip, tip.get_rect(center=(WIDTH // 2, HEIGHT - 26)))
 
     # --- Playing ---
 
