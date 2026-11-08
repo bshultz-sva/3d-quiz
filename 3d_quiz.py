@@ -6,7 +6,7 @@ Media Encoder and compression, Photoshop batch actions) and the time travel clas
 (time travel: 2.5D, 3D layers, lights and material options, per-character 3D,
 keying, Auto-Orient, the photo tunnel, depth of field and rack focus) and the audio react class
 (audio_react_export: Audio Spectrum and Audio Waveform, panning, frequencies and bandwidth,
-Convert Audio to Keyframes, and linking properties to the sound with expressions).
+Convert Audio to Keyframes, linking properties to the sound with expressions, and the Trapcode plugins).
 Starred cards are things the teacher flagged in class as quiz material or kept repeating.
 
 Space or click flips a card. Then Y or the Right arrow if you knew it, N or the Left arrow if
@@ -269,6 +269,39 @@ CARDS = [
     (AUDIO, "How do you turn an expression off without deleting it?", "Click its Enable Expression switch (=)", "", False),
     (AUDIO, "Where can you find ready-made expression code, like wiggle variations?", "The Creative COW forums (Expressions)", "", False),
     (AUDIO, "Where did the class get free music and sound effects?", "Pixabay", "", False),
+    (AUDIO, "Which plugin suite has Form, Particular, Mir, Tao and Sound Keys?", "Trapcode (Red Giant)",
+     "Students get it free through the school license.", False),
+    (AUDIO, "What is Trapcode Form?", "A 3D particle grid: a base form of particles you can shape and animate",
+     "Base forms include a box grid, strings, a sphere or a 3D model.", False),
+    (AUDIO, "How do you make Trapcode Form react to music without expressions?", "Use its built-in Audio React: pick the audio layer, a reactor (like Fractal or Size) and a frequency",
+     "", True),
+    (AUDIO, "In Form's Audio React, what do 20, 650 and 6000 Hz target?", "20 Hz the low end (bass), 650 Hz the mid-range, 6000 Hz the top end",
+     "Width opens or narrows the range of frequencies around that number.", False),
+    (AUDIO, "How do you get a single line of particles in Form?", "Base Form: Strings, with Strings in Y set to 1",
+     "Turn on X, Y, Z individually linked to stretch it wide.", False),
+    (AUDIO, "What does Trapcode Sound Keys do?", "Isolates frequency ranges of a track and outputs a value for each range",
+     "Put it on an adjustment layer, choose the audio layer, drag a range box over the spectrum, then Apply.", True),
+    (AUDIO, "How do you link a property to a Sound Keys range?", "Option-click (Alt-click) its stopwatch and pick-whip to that range's Output",
+     "It has 3 ranges by default, and you can add more.", False),
+    (AUDIO, "Convert Audio to Keyframes vs Sound Keys?",
+     "Convert Audio to Keyframes gives one value for the whole track; Sound Keys lets you pick exact frequency ranges and amplitudes", "", True),
+    (AUDIO, "Which Trapcode plugin makes 3D surfaces you can turn into wireframes and repeat?", "Trapcode Mir",
+     "Fractal, shader (wireframe), and repeater instances.", False),
+    (AUDIO, "Which Trapcode plugin builds geometry along paths (circle, line, gridify, twist)?", "Trapcode Tao", "", False),
+    (AUDIO, "Which Trapcode plugin is the full particle system with physics like bounce, flocking and fluids?", "Trapcode Particular",
+     "Also spherical fields, turbulence, gravity and emitters.", False),
+    (AUDIO, "What shading tool did the class use with Form and Particular?", "Shadowlet", "", False),
+    (AUDIO, "Name some glows to finish an audio react piece", "Trapcode Starglow, Universe Glimmer, Chromatic Glow",
+     "\"Always put a glow on it.\"", False),
+    (AUDIO, "Previews are slow with Trapcode. What should you lower, and what should you not?",
+     "Lower the preview resolution; don't lower the frame rate or skip frames",
+     "Skipping frames changes the music's dynamics, so you can't judge the timing.", True),
+    (AUDIO, "How much render time should you budget for Trapcode work?", "Extra time, a couple of hours", "", False),
+    (AUDIO, "Audio React assignment: what are the requirements?",
+     "About a minute (up to a minute and a half) of a nonverbal, dynamic track, at least 10 camera cuts on the beat, using Trapcode tools",
+     "", True),
+    (AUDIO, "Which music video was shown for its wireframe, depth-of-field look?", "David Bowie, \"Love Is Lost\" (Hello Steve Reich Mix)",
+     "Daniel Sierra's \"Oscillate\" was shown too.", False),
 ]
 
 DECKS = [("1", SPACE, SPACE), ("2", CAMERAS, CAMERAS), ("3", LIGHTS, LIGHTS), ("4", TRICKS, TRICKS),
